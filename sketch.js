@@ -5,58 +5,48 @@ let insideRadius = 200
 let button
 let myFont
 
-function preload() {
- myFont = loadFont('./assets/source-sans-pro/SourceSansPro-It.otf')
+function preLoad() {
+
+myFont = loadFont('../source-sans-pro/SourceSansPro-Black.otf')
+
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL)
 
   input = createInput()
-  input.position(width / 2, height - 20)
+  input.position(width / 2-80, height - 80)
 
   button = createButton('textGen')
-  button.mousePressed(generateText)
-  button.position(input.x + input.width, height - 20)
+  button.mousePressed(modelReady)
+  button.position(input.x + input.width, height -80)
 
   background(204)
   x = width / 40
   y = height / 40
   fill(0)
-  textFont(myFont)
+  textFont('Georgia')
   textSize(32)
-}
-
-function generateText() {
-  //httpPost(path, [datatype], [data], [callback], [errorCallback])
-  const path = 'http://localhost:8000/query'
-  const datatype = 'json'
-
-  const data = {
-    prompt: '',
-    max_characters: 1024,
-    top_p: 1,
-    seed: 599,
-  }
-
-  httpPost(path, datatype, data, gotText, gotError)
-
   const text = input.value()
   input.value('')
 }
 
-function gotText(data) {
-  console.log(data)
-  text(data, 150, 200)
-  fill(0)
-  textSize(12)
+// Create a new Sentiment method
+const sentiment = ml5.sentiment('movieReviews', modelReady);
+      
+// When the model is loaded
+function modelReady() {
+  // model is ready
+  console.log("Model Loaded!");
 }
 
-function gotError(error) {
-  console.log(error)
-}
+// make the prediction
+const prediction = sentiment.predict();
 
 function draw() {
+  textFont('Georgia')
+  textSize(20)
+  text('Fussy Shapes', 100,200)
   background(204)
   let numPoints = int(map(mouseX, 0, width, 60, 0))
   let angle = 0
@@ -77,6 +67,9 @@ function draw() {
 
 function keyPressed() {
   if (keyCode == ENTER) {
-    text(gotText, 120, 200)
+
+    text('Hi'+prediction, 100, 200)
+    fill(0)
+    textSize(12)
   }
 }
