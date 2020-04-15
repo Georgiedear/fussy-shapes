@@ -1,58 +1,71 @@
+'use strict'
+
 let x
 let y
-let outsideRadius = 150
-let insideRadius = 200
-let button
-let myFont
+let outsideRadius = 130
+let insideRadius = 180
+let sourceSansFont
+let input
+let sentiment
+let sentimentReady = false
+let sentimentInput = ''
+let numPoints = 25
 
-function preLoad() {
-
-myFont = loadFont('../source-sans-pro/SourceSansPro-Black.otf')
-
+function preload() {
+  sourceSansFont = loadFont('assets/source-sans-pro/SourceSansPro-Regular.otf')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL)
 
   input = createInput()
-  input.position(width / 2-80, height - 80)
+  const inputWidth = 300
+  input.position(width / 2 - inputWidth / 2, height - 80)
+  input.size(inputWidth, 20)
+  input.elt.focus()
 
-  button = createButton('textGen')
-  button.mousePressed(modelReady)
-  button.position(input.x + input.width, height -80)
-
-  background(204)
   x = width / 40
   y = height / 40
-  fill(0)
-  textFont('Georgia')
-  textSize(32)
-  const text = input.value()
-  input.value('')
-}
 
-// Create a new Sentiment method
-const sentiment = ml5.sentiment('movieReviews', modelReady);
-      
-// When the model is loaded
-function modelReady() {
-  // model is ready
-  console.log("Model Loaded!");
+  // Create a new Sentiment method
+  sentiment = ml5.sentiment('movieReviews', () => (sentimentReady = true))
 }
-
-// make the prediction
-const prediction = sentiment.predict();
 
 function draw() {
-  textFont('Georgia')
-  textSize(20)
-  text('Fussy Shapes', 100,200)
   background(204)
-  let numPoints = int(map(mouseX, 0, width, 60, 0))
+
+  if (!sentimentReady) {
+    fill(0)
+    textFont(sourceSansFont)
+    textSize(32)
+    textAlign(CENTER)
+    return
+  }
+
+  // Draw the fussy shapes title.
+  fill(0)
+  textFont(sourceSansFont)
+  textSize(32)
+  textAlign(CENTER)
+  text('Fussy Shapes', 0, -250)
+
+  // Draw the output text.
+  fill(0)
+  textFont(sourceSansFont)
+  textSize(20)
+  text(sentimentInput, 0, 0)
+
+  //Draw the textbox
+  fill(0)
+  textFont(sourceSansFont)
+  textSize(18)
+  textAlign(CENTER)
+  text('Enter sentences here then hit Enter ', 0, 200)
+
+ //Draw the circle. Got Circle code here: 
   let angle = 0
   rotate(frameCount * 0.01)
   const angleStep = 360.0 / numPoints
-
   strokeWeight(6)
   fill('rgba(0,0,0,0)')
   beginShape()
@@ -67,9 +80,10 @@ function draw() {
 
 function keyPressed() {
   if (keyCode == ENTER) {
-
-    text('Hi'+prediction, 100, 200)
-    fill(0)
-    textSize(12)
+    sentimentInput = input.value()
+    const { score } = sentiment.predict(sentimentInput)
+    numPoints = Math.floor(score * 10)
+    numPoints = Math.max(numPoints, 3)
+    input.value('')
   }
 }
