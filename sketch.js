@@ -1,8 +1,8 @@
 
 let x
 let y
-let outsideRadius = 130
-let insideRadius = 180
+let outsideRadius = 180
+let insideRadius = 230
 let sourceSansFont
 let input
 let sentiment
@@ -22,14 +22,15 @@ function setup() {
 
   input = createInput()
   const inputWidth = 300
-  input.position(width / 2 - inputWidth / 2, height - 90)
-  input.size(inputWidth, 20)
+  input.position(width / 2 - inputWidth / 2, height - 150)
+  input.size(inputWidth, 30)
 
   x = width / 40
   y = height / 40
 
   // Create a new Sentiment method and passes callback
   sentiment = ml5.sentiment('movieReviews', onSentimentReady)
+  input.elt.focus()
 }
 
 function draw() {
@@ -38,7 +39,7 @@ function draw() {
   if (!sentimentReady) {
     fill(0)
     textFont(sourceSansFont)
-    textSize(32)
+    textSize(3)
     textAlign(CENTER)
     return
   }
@@ -46,9 +47,9 @@ function draw() {
   // Draw the fussy shapes title.
   fill(255)
   textFont(sourceSansFont)
-  textSize(32)
+  textSize(52)
   textAlign(CENTER)
-  text('Fussy Shapes', 0, -250)
+  text('Fussy Shapes', 0, -350)
 
   // Draw the output text.
   fill(255)
@@ -56,20 +57,22 @@ function draw() {
   textSize(25)
   textAlign(LEFT)
   fill(138,141,255)
+  textSize(25)
   text(sentimentInput, 0, 0)
 
   //Draw the text instructions
   fill(255)
   textFont(sourceSansFont)
-  textSize(18)
+  textSize(25)
   textAlign(CENTER)
-  text('Welcome to Fussy Shapes! ', 0, -210)
-  text('This shape will become smoother or more rugged based on the the sentiment of your sentence. ', 0, -180)
-  text('Type sentences here then hit the Enter key. ', 0, 280)
+  text('Welcome to Fussy Shapes! ', 0, -290)
+  text('This shape will become smoother or more rugged based on the the sentiment of your sentence. ', 0, -250)
+  text('Type sentences here then hit the Enter key. ', 0, 290)
 
   //Draw the circle. Got Circle code here:
   let angle = 0
   rotate(frameCount * 0.01)
+  rotateY(frameCount * 0.01)
   const angleStep = 360.0 / numPoints
   strokeWeight(6)
   stroke(255)
