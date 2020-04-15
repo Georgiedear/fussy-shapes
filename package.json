@@ -1,0 +1,21 @@
+{
+  "name": "fussy-shapes",
+  "version": "1.0.0",
+  "description": "It's fussy shapes.",
+  "repository": "https://github.com/Georgiedear/fussy-shapes.git",
+  "license": "MIT",
+  "author": "Georgina Yeboah <gina.yo@hotmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "serve": "serve ."
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.2",
+    "serve": "^11.3.0"
+  }
+}
