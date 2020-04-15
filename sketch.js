@@ -1,4 +1,3 @@
-'use strict'
 
 let x
 let y
@@ -10,9 +9,12 @@ let sentiment
 let sentimentReady = false
 let sentimentInput = ''
 let numPoints = 25
-
 function preload() {
   sourceSansFont = loadFont('assets/source-sans-pro/SourceSansPro-Regular.otf')
+}
+
+function onSentimentReady() {
+  sentimentReady = true
 }
 
 function setup() {
@@ -20,19 +22,18 @@ function setup() {
 
   input = createInput()
   const inputWidth = 300
-  input.position(width / 2 - inputWidth / 2, height - 80)
+  input.position(width / 2 - inputWidth / 2, height - 90)
   input.size(inputWidth, 20)
-  input.elt.focus()
 
   x = width / 40
   y = height / 40
 
-  // Create a new Sentiment method
-  sentiment = ml5.sentiment('movieReviews', () => (sentimentReady = true))
+  // Create a new Sentiment method and passes callback
+  sentiment = ml5.sentiment('movieReviews', onSentimentReady)
 }
 
 function draw() {
-  background(204)
+  background(255,0.8)
 
   if (!sentimentReady) {
     fill(0)
@@ -43,30 +44,35 @@ function draw() {
   }
 
   // Draw the fussy shapes title.
-  fill(0)
+  fill(255)
   textFont(sourceSansFont)
   textSize(32)
   textAlign(CENTER)
   text('Fussy Shapes', 0, -250)
 
   // Draw the output text.
-  fill(0)
+  fill(255)
   textFont(sourceSansFont)
-  textSize(20)
+  textSize(25)
+  textAlign(LEFT)
+  fill(138,141,255)
   text(sentimentInput, 0, 0)
 
-  //Draw the textbox
-  fill(0)
+  //Draw the text instructions
+  fill(255)
   textFont(sourceSansFont)
   textSize(18)
   textAlign(CENTER)
-  text('Enter sentences here then hit Enter ', 0, 200)
+  text('Welcome to Fussy Shapes! ', 0, -210)
+  text('This shape will become smoother or more rugged based on the the sentiment of your sentence. ', 0, -180)
+  text('Type sentences here then hit the Enter key. ', 0, 280)
 
- //Draw the circle. Got Circle code here: 
+  //Draw the circle. Got Circle code here:
   let angle = 0
   rotate(frameCount * 0.01)
   const angleStep = 360.0 / numPoints
   strokeWeight(6)
+  stroke(255)
   fill('rgba(0,0,0,0)')
   beginShape()
   for (let i = 0; i <= numPoints; i++) {
