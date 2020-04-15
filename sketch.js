@@ -8,7 +8,7 @@ let input
 let sentiment
 let sentimentReady = false
 let sentimentInput = ''
-let numPoints = 25
+let numPoints = 50
 function preload() {
   sourceSansFont = loadFont('assets/source-sans-pro/SourceSansPro-Regular.otf')
 }
@@ -57,7 +57,6 @@ function draw() {
   textSize(25)
   textAlign(LEFT)
   fill(138,141,255)
-  textSize(25)
   text(sentimentInput, 0, 0)
 
   //Draw the text instructions
@@ -69,7 +68,7 @@ function draw() {
   text('This shape will become smoother or more rugged based on the the sentiment of your sentence. ', 0, -250)
   text('Type sentences here then hit the Enter key. ', 0, 290)
 
-  //Draw the circle. Got Circle code here:
+  //Draw the circle. Got Circle code here: https://p5js.org/examples/form-triangle-strip.html
   let angle = 0
   rotate(frameCount * 0.01)
   rotateY(frameCount * 0.01)
@@ -92,7 +91,7 @@ function keyPressed() {
     sentimentInput = input.value()
     const { score } = sentiment.predict(sentimentInput)
     numPoints = Math.floor(score * 10)
-    numPoints = Math.max(numPoints, 3)
+    numPoints = Math.max(numPoints, 3) //min number of vertices that can be reached.
     input.value('')
   }
 }
