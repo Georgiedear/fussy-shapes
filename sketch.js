@@ -68,6 +68,9 @@ function draw() {
   text('This shape will become smoother or more rugged based on the the sentiment of your sentence. ', 0, -250)
   text('Type sentences here then hit the Enter key. ', 0, 290)
 
+  textSize(18)
+  text('Georgina Yeboah 2020. Copyright ©. All Rights Reserved. ', 0, 440)
+
   //Draw the circle. Got Circle code here: https://p5js.org/examples/form-triangle-strip.html
   let angle = 0
   rotate(frameCount * 0.01)
