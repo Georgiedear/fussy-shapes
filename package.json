@@ -4,7 +4,7 @@
   "description": "It's fussy shapes.",
   "repository": "https://github.com/Georgiedear/fussy-shapes.git",
   "license": "MIT",
-  "author": "Georgina Yeboah <gina.yo@hotmail.com>",
+  "author": "Georgina Yeboah",
   "main": "index.js",
   "scripts": {
     "serve": "serve ."
@@ -15,7 +15,10 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "prettier": "^2.0.2",
-    "serve": "^11.3.0"
+    "prettier": "^3.6.2",
+    "serve": "^14.2.5"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
